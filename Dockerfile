@@ -13,4 +13,6 @@ COPY --chown=root:root nvim_config/init.lua /root/.config/nvim
 COPY --chown=root:root nvim_config/lua/ansible /root/.config/nvim/lua/ansible
 COPY --chown=root:root ansible-lint.yml /root/.config
 
-ENTRYPOINT ["/usr/bin/nvim", "/code"]
+WORKDIR /code
+
+ENTRYPOINT ["/usr/bin/nvim"]
