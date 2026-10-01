@@ -59,8 +59,8 @@ and a preview is provided on the right side.
 
 Struggle to remember the shortcuts? Here a reminder:
 
-- <Space>sf: Search File
-- <Space>sg: Search Grep
+- ```<Space>sf```: Search File
+- ```<Space>sg```: Search Grep
 
 ## Ansible Linter
 
@@ -68,9 +68,9 @@ Once loaded the yaml file, the ansible linter will start soon to check the
 entire file. You can see in the bottom right corner the linter status. It will
 also analize again the file every time you save it.
 
-Diagnostics like Errors are identified with a red E letter on the left. You
-can press <Ctrl>n to jump to the next one and see the error, so you can
-easly fix it.
+Diagnostics like Errors are identified with a red ```E``` letter on the left.
+You can press ```<Ctrl>n``` to jump to the next one and see the error, so you
+can easly fix it.
 
 Some linter checks are disabled, as you can see in the ansible-lint.yml file
 in this repository. You can customize the linter behaviour editing the file
@@ -87,18 +87,18 @@ a module name and press:
 to have the buffer splitted vertically with the documentation inside NeoVim
 itself. You can browse the documentation with the usual vim motions and search
 shortcuts, and you can switch between your code and the documentation using the
-combination <Ctrl>ww (yes, two 'w').
+combination ```<Ctrl>ww``` (yes, two 'w').
 
 Once you've done, use the combination to go on the documentation and close it
-with the usual :q command.
+with the usual ```:q``` command.
 
 ## Customization
 
 You can easly customize you NeoVim experience by editing the files in this
 repository.
 
-- ansible_lint.yml: the Ansible Linter configuration
-- nvim_config: the entire NeoVim configuration, with all the plugins
+- ```ansible_lint.yml```: the Ansible Linter configuration
+- ```nvim_config```: the entire NeoVim configuration, with all the plugins
 
 ## Aliasing the vi/vim command
 
