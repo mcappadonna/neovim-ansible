@@ -16,10 +16,14 @@ of your ansible code:
     # docker run -it --rm -v MyCodeDirectory:/code neovim-ansible:latest
 
 The system will install all the necessary plugins at every launch of the
-container, you can follow errors inside the NeoVim lower status bar.
+container, so you need internet connection from the host.
+You can follow errors inside the NeoVim lower status bar.
 Once is done you are presented with the content of your code directory.
 
-You're now ready to code!
+If you want to open specific files you can pass it to the docker command line
+as an relative path, the working directory is /code.
+
+You're now ready to write your best Ansible code!
 
 ## Some usage notes
 
@@ -88,10 +92,42 @@ combination <Ctrl>ww (yes, two 'w').
 Once you've done, use the combination to go on the documentation and close it
 with the usual :q command.
 
-## Customization
+## Customization
 
 You can easly customize you NeoVim experience by editing the files in this
 repository.
 
 - ansible_lint.yml: the Ansible Linter configuration
 - nvim_config: the entire NeoVim configuration, with all the plugins
+
+## Aliasing the vi/vim command
+
+An handy way to use this container is to aliasing the vi/vim command so you
+don't have to type out all the docker options at every launch.
+
+Here an example bash/zsh configuration you can use to easly do that, just paste
+it at the end of your .zsh/.bashrc file in your home directory:
+
+```shell
+function vi () {
+    TGP=""
+    TGF=""
+    if [ ${#1} -eq 0 ]; then
+        TGP=$PWD
+    else
+        if [ -d $1 ]; then
+            TGP=$(realpath $1)
+        elif [ -f $1 ]; then
+            FULL=$(realpath $1)
+            TGF=$(basename $FULL)
+            TGP=$(dirname $FULL)
+        fi
+    fi
+    if [ ${#TGF} -eq 0 ]; then
+        docker run -it --rm -v $TGP:/code neovim-ansible:latest
+    else
+        docker run -it --rm -v $TGP:/code neovim-ansible:latest /code/${TGF}
+    fi
+}
+alias vim=vi
+```
