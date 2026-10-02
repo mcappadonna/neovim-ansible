@@ -124,7 +124,7 @@ function vi () {
         fi
     fi
     if [ ${#TGF} -eq 0 ]; then
-        docker run -it --rm -v $TGP:/code neovim-ansible:latest
+        docker run -it --rm -v $TGP:/code neovim-ansible:latest /code
     else
         docker run -it --rm -v $TGP:/code neovim-ansible:latest /code/${TGF}
     fi
