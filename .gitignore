@@ -1,0 +1,3 @@
+nvim_config/lazy-lock.json
+nvim_data/*
+!nvim_data/README.md
