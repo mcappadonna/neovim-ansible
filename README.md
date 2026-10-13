@@ -13,12 +13,23 @@ Some cool features are:
 Once built, you can run the docker container specifying the root directory
 of your ansible code:
 
-    # docker run -it --rm -v MyCodeDirectory:/code neovim-ansible:latest
+    # docker run -it --rm -v MyCodeDirectory:/code -v ${CLONE_DIR}/nvim_config:/root/.config/nvim neovim-ansible:latest
+
+where CLONE\_DIR is the directory where you've cloned this repository.
 
 The system will install all the necessary plugins at every launch of the
 container, so you need internet connection from the host.
 You can follow errors inside the NeoVim lower status bar.
 Once is done you are presented with the content of your code directory.
+
+If you want to avoid reinstall everything at launch, you can map the nvim_data
+directory too:
+
+    # docker run -it --rm \
+    > -v MyCodeDirectory:/code \
+    > -v ${CLONE_DIR}/nvim_config:/root/.config/nvim \
+    > -v ${CLONE_DIR}/nvim_data:/root/.local/share/nvim \
+    > neovim-ansible:latest
 
 If you want to open specific files you can pass it to the docker command line
 as an relative path, the working directory is /code.
@@ -106,10 +117,12 @@ An handy way to use this container is to aliasing the vi/vim command so you
 don't have to type out all the docker options at every launch.
 
 Here an example bash/zsh configuration you can use to easly do that, just paste
-it at the end of your .zsh/.bashrc file in your home directory:
+it at the end of your .zsh/.bashrc file in your home directory, just adjust
+the CLONE_DIR variable with the directory where you've cloned this repository:
 
 ```shell
 function vi () {
+    CLONE_DIR=$HOME/git/neovim-ansible
     TGP=""
     TGF=""
     if [ ${#1} -eq 0 ]; then
@@ -124,9 +137,9 @@ function vi () {
         fi
     fi
     if [ ${#TGF} -eq 0 ]; then
-        docker run -it --rm -v $TGP:/code neovim-ansible:latest /code
+        docker run -it --rm -v $TGP:/code -v ${CLONE_DIR}/nvim_config:/root/.config/nvim -v ${CLONE_DIR}/nvim_data:/root/.local/share/nvim neovim-ansible:latest /code
     else
-        docker run -it --rm -v $TGP:/code neovim-ansible:latest /code/${TGF}
+        docker run -it --rm -v $TGP:/code -v ${CLONE_DIR}/nvim_config:/root/.config/nvim -v ${CLONE_DIR}/nvim_data:/root/.local/share/nvim neovim-ansible:latest /code/${TGF}
     fi
 }
 alias vim=vi
